@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+var program = require('commander')
+var buildAndroid = require('../lib/android-build')
+var addAndroid = require('../lib/android-init')
+
+function build (platform) {
+  if (platform === 'android') {
+    buildAndroid()
+  }
+}
+
+function add (platform) {
+  if (platform === 'android') {
+    addAndroid()
+  }
+}
+
+program.parse(process.argv)
+var operator = program.args[0]
+var platform = program.args[1]
+
+switch (operator) {
+  case 'build':
+    build(platform)
+    break
+  case 'add':
+    add(platform)
+    break
+  default :
+    break
+}

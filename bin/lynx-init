@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+
+var program = require('commander')
+var writeFile = require('fs').writeFileSync
+var exists = require('fs').exists
+var ora = require('ora')
+var logger = require('../lib/logger')
+var download = require('download-git-repo')
+
+function generateManifest(name) {
+  var packageName = 'com.' + name
+  var manifest = {
+    "application": {
+        "package": packageName,
+        "icon": "icon.png",
+        "name": name,
+        "versionCode": "",
+        "versionName": "",
+        "mainPage": "App.vue"
+    },
+    "pages": [
+        {
+            "name": "App.vue"
+        }
+    ]
+  }
+
+  var manifestPath = name + '/src/manifest.json'
+  writeFile(manifestPath, JSON.stringify(manifest, null, 2))
+}
+
+function run() {
+  program.parse(process.argv)
+  var name = program.args[0]
+  if(exists(name)) {
+    logger.fatal('[%] is already exist' + name)
+  }
+  var template = 'hxxft/lynx-simple-template'
+  var spinner = ora('downloading template')
+  spinner.start()
+  download(template, name, function (err) {
+    spinner.stop()
+    if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
+    generateManifest(name)
+  })
+}
+
+run()
