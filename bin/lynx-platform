@@ -5,6 +5,7 @@ var buildAndroid = require('../lib/android-build')
 var addAndroid = require('../lib/android-init')
 
 function build (platform) {
+
   if (platform === 'android') {
     buildAndroid()
   }
