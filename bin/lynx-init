@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 
 var program = require('commander')
+var fs = require('fs')
+var readFile = require('fs').readFileSync
 var writeFile = require('fs').writeFileSync
 var exists = require('fs').exists
 var ora = require('ora')
 var logger = require('../lib/logger')
 var download = require('download-git-repo')
+var inquirer = require('inquirer')
+var author = require('../lib/git-user')
 
 function generateManifest(name) {
   var packageName = 'com.' + name
@@ -29,6 +33,64 @@ function generateManifest(name) {
   writeFile(manifestPath, JSON.stringify(manifest, null, 2))
 }
 
+function config(confs, callback, name, index) {
+  if(!index) index = 0
+  var conf = confs[index]
+  inquirer.prompt([{
+    type: 'input',
+    name: conf.name,
+    message: conf.message,
+    default: conf.default
+  }], function (answers) {
+    conf.content = answers[conf.name]
+    var next = index + 1
+    if(next < confs.length)
+      config(confs, callback, name, next)
+    else
+      callback(confs, name)
+  })
+}
+
+function configFinish(confs, name) {
+  var packageJsonPath = name + '/package.json'
+  if(!fs.existsSync(packageJsonPath)) {
+    logger.fatal('%s is not exists', packageJsonPath)
+  }
+  var package = JSON.parse(readFile(packageJsonPath))
+  for(var conf in confs) {
+    package[confs[conf].name] = confs[conf].content
+  }
+  writeFile(packageJsonPath, JSON.stringify(package, null, 2))
+}
+
+
+function modifyPackage(name) {
+  var confs = [
+    {
+      "name": "name",
+      "message": "Project name",
+      "default": name,
+      "content": ""
+    },
+    {
+      "name": "description",
+      "message": "Project description",
+      "default": "A Lynx project",
+      "content": ""
+    },
+    {
+      "name": "author",
+      "message": "Author",
+      "default": author(),
+      "content": ""
+    }
+  ]
+
+  config(confs, configFinish, name)
+  //generateManifest(name)
+}
+
+
 function run() {
   program.parse(process.argv)
   var name = program.args[0]
@@ -41,8 +103,10 @@ function run() {
   download(template, name, function (err) {
     spinner.stop()
     if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
-    generateManifest(name)
+    modifyPackage(name)
   })
 }
 
 run()
+
+
