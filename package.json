@@ -5,7 +5,8 @@
   "bin": {
     "lynx": "bin/lynx",
     "lynx-init": "bin/lynx-init",
-    "vue-platform": "bin/vue-platform"
+    "lynx-platform": "bin/lynx-platform",
+    "lynx-build": "bin/lynx-build"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
