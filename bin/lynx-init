@@ -87,7 +87,7 @@ function modifyPackage(name) {
   ]
 
   config(confs, configFinish, name)
-  //generateManifest(name)
+  generateManifest(name)
 }
 
 
