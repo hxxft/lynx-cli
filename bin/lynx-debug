@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var program = require('commander')
+var build = require('../lib/build')
+var androidDebugRun = require('../lib/android-debug-run')
+
+function run() {
+  program.parse(process.argv)
+  var platform = program.args[0]
+  var name = program.args[1]
+
+  if (platform === 'android') {
+    build(name + '.vue', androidDebugRun)
+  }
+}
+
+run()
