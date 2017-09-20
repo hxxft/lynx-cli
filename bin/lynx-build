@@ -44,20 +44,32 @@
 //     logger.success('Build page[%s] successed', page)
 //   })
 // }
+
+var async = require('async')
 var program = require('commander')
 var build = require('../lib/build')
 var getManifest = require('../lib/manifest')
 
+var index = 0
+var pages
+
+function next() {
+  if(index < pages.length) {
+    var name = pages[index].name
+    index++
+    build(name, next)
+  }
+}
+
 function run() {
   program.parse(process.argv)
-  var page = program.args[1]
+  var page = program.args[0]
   if(page) {
     build(page + '.vue')
   } else {
     pages = getManifest().application.pages
-    for( var page in pages ){
-      build(pages[page].name)
-    }
+    
+    next()
   }
   
 }
