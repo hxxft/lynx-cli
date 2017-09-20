@@ -20,13 +20,13 @@ function generateManifest(name) {
         "name": name,
         "versionCode": "",
         "versionName": "",
-        "mainPage": "App.vue"
-    },
-    "pages": [
-        {
-            "name": "App.vue"
-        }
-    ]
+        "mainPage": "App.vue",
+        "pages": [
+          {
+              "name": "App.vue"
+          }
+      ]
+    }
   }
 
   var manifestPath = name + '/src/manifest.json'
