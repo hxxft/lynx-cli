@@ -15,7 +15,7 @@ function generateManifest(name) {
   var packageName = 'com.' + name
   var manifest = {
     "application": {
-        "package": packageName,
+        "packageName": packageName,
         "icon": "icon.png",
         "name": name,
         "versionCode": "",
