@@ -71,6 +71,7 @@ Lynx的工程配置信息全部存储在`manfiest.json`中，文件包含了项�
 
 ```
 {
+  "debug": "false",
   "application": {
     "packageName": "com.test",
     "icon": "icon.png",
@@ -87,6 +88,8 @@ Lynx的工程配置信息全部存储在`manfiest.json`中，文件包含了项�
 }
 ```
 配置文件中有如下参数
+
+`debug` 设置应用是否允许被调试，默认不添加情况下是不允许被调试，可以在调试应用的时候加上，发布的时候去掉
 
 `packageName` 打包应用的包名，为确保应用不会和手机上的应用冲突
 
