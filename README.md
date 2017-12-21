@@ -30,7 +30,7 @@ init命令会从 [hxxft/lynx-simple-template](https://github.com/hxxft/lynx-simp
 $ lynx build
 ```
 
-Lynx会通过工程目录下面的`manfiest.json`的配置来编译工程，所有在`manifest.json`中配置过的页面都会被编译打包至dist目录下面
+Lynx会通过工程目录下面的`manfiest.json`的配置来编译工程，所有在`manifest.json`中配置过的页面都会被编译打包至dist目录下面，**请确保在执行`lynx build`之前已经完成`npm install`的操作**。
 
 ## 添加平台
 在创建完工程之后，开发者可以添加自己想编译打包的平台。
