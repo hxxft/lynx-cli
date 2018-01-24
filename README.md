@@ -62,7 +62,7 @@ $ lynx debug ios <page-name>
 例如:
 
 ``` bash
-$ lynx debug androd app
+$ lynx debug android app
 ```
 
 ## 配置文件
