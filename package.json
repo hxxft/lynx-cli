@@ -1,6 +1,6 @@
 {
   "name": "lynx-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple CLI for Lynx",
   "bin": {
     "lynx": "bin/lynx",
