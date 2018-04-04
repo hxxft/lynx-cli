@@ -47,6 +47,7 @@
 
 var async = require('async')
 var program = require('commander')
+var fs = require('fs-extra')
 var build = require('../lib/build')
 var getManifest = require('../lib/manifest')
 
@@ -71,7 +72,8 @@ function run() {
     
     next()
   }
-  
+  //copy assets
+  fs.copySync('./src/assets', './dist/assets', {}) 
 }
 
 run()

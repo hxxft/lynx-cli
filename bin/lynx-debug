@@ -4,7 +4,7 @@ var program = require('commander')
 var build = require('../lib/build')
 var androidDebugRun = require('../lib/android-debug-run')
 var projectWatcher = require('../lib/project-watcher')
-
+var logger = require('../lib/logger')
 
 function run() {
   program.parse(process.argv)
@@ -14,6 +14,8 @@ function run() {
 
   if (platform === 'android') {
     build(name + '.vue', androidDebugRun)
+  }else{
+    logger.fatal("Please check debug platform, only support android/ios")
   }
   projectWatcher(name)
 }
